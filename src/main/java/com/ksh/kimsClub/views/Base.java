@@ -1,9 +1,13 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views;
 
 import com.ksh.common.ImageInfo;
-import com.ksh.common.Position;
 import com.ksh.common.utils.ImageUtil;
-import com.ksh.common.utils.MouseUtil;
+import com.ksh.common.utils.OCRUtil;
+import com.ksh.kimsClub.commonMacro.*;
+import com.ksh.kimsClub.views.alliance.AllianceGift;
+import com.ksh.kimsClub.views.alliance.AllianceHelp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Base {
 
@@ -24,6 +28,8 @@ public class Base {
 
     private ImageInfo quitOkImg = new ImageInfo(135, 480, 165, 40, "src/main/resources/lastshelter/images/base/quitOkButton.jpg");
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private static final Base instance = new Base();
 
     private Base() {
@@ -34,44 +40,53 @@ public class Base {
     }
 
     public void gotoBaseHome() {
+        logger.info("start gotoBaseHome");
         do {
-            MouseUtil.click(409, 89);
+            CommonMacro.click(409, 89);
             CommonMacro.clickBack();
             CommonMacro.clickBack();
-        } while (!ImageUtil.findImageOnScreen(quitOkImg.getImgFile().getAbsolutePath()).getIsOnScreen());
+        } while (!OCRUtil.isImgContainsText(quitOkImg, "K"));
         CommonMacro.clickBack();
-        CommonMacro.clickImage(outdoorIconImg);
-        CommonMacro.waitForImgAppear(heroIconImg,5000);
+        CommonMacro.waitImgAndClick(outdoorIconImg);
+//        CommonMacro.clickImage(outdoorIconImg);
+//        CommonMacro.sleep(100);
+        ImageUtil.waitForImgAppear(heroIconImg, 5000);
         CommonMacro.clickBack();
-        CommonMacro.waitForImgAppear(heroIconImg,5000);
+        ImageUtil.waitForImgAppear(heroIconImg, 5000);
+        logger.info("finish gotoBaseHome");
     }
 
-    public Benefits clickBenefitsIcon(){
-        CommonMacro.clickImageOnScreen(benefitsIconImg);
+    public Benefits clickBenefitsIcon() {
+        CommonMacro.waitImgAndClick(benefitsIconImg);
+//        CommonMacro.clickImageOnScreen(benefitsIconImg);
         return Benefits.getInstance();
     }
 
     public Settings clickSettingsIcon() {
         clickMenuToOpen();
-        CommonMacro.clickImageOnScreen(settingsIconImg);
+        CommonMacro.waitImgAndClick(settingsIconImg);
+//        CommonMacro.clickImageOnScreen(settingsIconImg);
         return Settings.getInstance();
     }
 
     public Mail clickMailIcon() {
         clickMenuToOpen();
-        CommonMacro.clickImageOnScreen(mailIconImg);
+        CommonMacro.waitImgAndClick(mailIconImg);
+//        CommonMacro.clickImageOnScreen(mailIconImg);
         return Mail.getInstance();
     }
 
     public Item clickItemIcon() {
         clickMenuToOpen();
-        CommonMacro.clickImageOnScreen(itemIconImg);
+        CommonMacro.waitImgAndClick(itemIconImg);
+//        CommonMacro.clickImageOnScreen(itemIconImg);
         return Item.getInstance();
     }
 
-    public Alliance clickAllienceIcon() {
+    public Alliance clickAllianceIcon() {
         clickMenuToOpen();
-        CommonMacro.clickImageOnScreen(allianceIconImg);
+        CommonMacro.waitImgAndClick(allianceIconImg);
+//        CommonMacro.clickImageOnScreen(allianceIconImg);
         return Alliance.getInstance();
     }
 
@@ -88,28 +103,39 @@ public class Base {
 
     public AllianceHelp clickHelpIcon() {
         clickMenuToClose();
-        boolean isClicked = CommonMacro.clickImageOnScreen(helpIconImg);
-        if (isClicked)
+        ImageInfo findImage = ImageUtil.findImageOnScreen(helpIconImg.getImgFile().getAbsolutePath());
+        if (findImage.getIsOnScreen()) {
+            CommonMacro.waitTimeAndClick(findImage, 100);
             return AllianceHelp.getInstance();
-        else
+        }else{
             return null;
+        }
     }
 
     public Hero clickHeroIcon() {
-        boolean isClicked = CommonMacro.clickImageOnScreen(heroIconImg);
-        if (isClicked)
+        clickMenuToClose();
+        ImageInfo findImage = ImageUtil.findImageOnScreen(heroIconImg.getImgFile().getAbsolutePath());
+        if (findImage.getIsOnScreen()) {
+            CommonMacro.waitTimeAndClick(heroIconImg, 100);
             return Hero.getInstance();
-        else
+        }else{
             return null;
+        }
     }
 
     public AllianceGift clickGiftIcon() {
-        CommonMacro.clickImageOnScreen(giftIconImg);
-        return AllianceGift.getInstance();
+        ImageInfo findImage = ImageUtil.findImageOnScreen(giftIconImg.getImgFile().getAbsolutePath());
+        if (findImage.getIsOnScreen()) {
+            CommonMacro.waitTimeAndClick(findImage, 100);
+            return AllianceGift.getInstance();
+        }else{
+            return null;
+        }
     }
 
     private void clickMenuIcon() {
-        CommonMacro.clickImage(menuIconImg);
+        CommonMacro.waitTimeAndClick(menuIconImg,500);
+//        CommonMacro.clickImage(menuIconImg);
     }
 
     private boolean isMenuOpened() {

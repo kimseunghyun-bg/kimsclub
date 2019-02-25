@@ -1,6 +1,7 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views;
 
 import com.ksh.common.ImageInfo;
+import com.ksh.kimsClub.commonMacro.CommonMacro;
 
 public class Hero {
     private ImageInfo recruitButtonImg = new ImageInfo(120, 770, 65, 20);
@@ -20,7 +21,8 @@ public class Hero {
 //    }
 
     public RecruitHeroes clickRecruitButton() {
-        CommonMacro.clickImageHasText(recruitButtonImg, "Recruit");
+        CommonMacro.waitTextAndClick(recruitButtonImg,"Recruit");
+//        CommonMacro.clickImageHasText(recruitButtonImg, "Recruit");
         return RecruitHeroes.getInstance();
     }
 

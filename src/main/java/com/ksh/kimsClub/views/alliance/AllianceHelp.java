@@ -1,6 +1,7 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views.alliance;
 
 import com.ksh.common.ImageInfo;
+import com.ksh.kimsClub.commonMacro.CommonMacro;
 
 public class AllianceHelp {
     //360:1240
@@ -18,6 +19,7 @@ public class AllianceHelp {
     }
 
     public void clickHelpAllButton(){
-        CommonMacro.clickImageHasText(helpAllButtonImg,"Help");
+        CommonMacro.waitTextAndClick(helpAllButtonImg,"Help");
+//        CommonMacro.clickImageHasText(helpAllButtonImg,"Help");
     }
 }

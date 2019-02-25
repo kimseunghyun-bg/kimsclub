@@ -1,7 +1,9 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views;
 
 import com.ksh.common.ImageInfo;
 import com.ksh.common.Position;
+import com.ksh.kimsClub.views.settings.Account;
+import com.ksh.kimsClub.commonMacro.CommonMacro;
 
 public class Settings {
 
@@ -19,7 +21,8 @@ public class Settings {
     }
 
     public Account clickAccountButton() {
-        CommonMacro.clickImageOnScreen(accountIconImg);
+        CommonMacro.waitImgAndClick(accountIconImg);
+//        CommonMacro.clickImageOnScreen(accountIconImg);
         return Account.getInstance();
     }
 }

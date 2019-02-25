@@ -1,6 +1,7 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views.settings;
 
 import com.ksh.common.ImageInfo;
+import com.ksh.kimsClub.commonMacro.CommonMacro;
 
 public class Account {
     private ImageInfo switchAccountButtonImg = new ImageInfo(140, 575, 155, 35);
@@ -16,7 +17,8 @@ public class Account {
     }
 
     public SwitchAccount clickSwitchAccountButton() {
-        CommonMacro.clickImageHasText(switchAccountButtonImg,"Switch");
+        CommonMacro.waitTextAndClick(switchAccountButtonImg,"Switch");
+//        CommonMacro.clickImageHasText(switchAccountButtonImg,"Switch");
         return SwitchAccount.getInstance();
     }
 }

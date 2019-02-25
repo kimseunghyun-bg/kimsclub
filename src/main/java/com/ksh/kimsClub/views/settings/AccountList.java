@@ -1,8 +1,7 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views.settings;
 
 import com.ksh.common.ImageInfo;
-import com.ksh.common.utils.Keyboard;
-import com.ksh.common.Position;
+import com.ksh.kimsClub.commonMacro.CommonMacro;
 
 public class AccountList {
 
@@ -22,38 +21,46 @@ public class AccountList {
     }
 
     private void clickAddAccountButton() {
-        CommonMacro.clickImageHasText(addAccountButtonImg, "Add");
+        CommonMacro.waitTextAndClick(addAccountButtonImg, "Add");
+//        CommonMacro.clickImageHasText(addAccountButtonImg, "Add");
     }
 
     private void clickIdTextBox() {
-        CommonMacro.clickImage(idBoxImg);
+        CommonMacro.waitTimeAndClick(idBoxImg, 500);
+//        CommonMacro.clickImage(idBoxImg);
     }
 
     private void clickPwdTextBox() {
-        CommonMacro.clickImage(pwdBoxImg);
+        CommonMacro.waitTimeAndClick(pwdBoxImg, 500);
+//        CommonMacro.clickImage(pwdBoxImg);
     }
 
     private void clickMailLoginButton() {
-        CommonMacro.clickImageHasText(mailLoginButtonImg, "login");
+        CommonMacro.waitTextAndClick(mailLoginButtonImg, "login");
+//        CommonMacro.clickImageHasText(mailLoginButtonImg, "login");
     }
 
     private void clickOkButton() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        CommonMacro.clickImageOnScreen(okButtonImg);
+        CommonMacro.sleep(1000);
+        CommonMacro.waitTextAndClick(okButtonImg, "K", 3000);
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        CommonMacro.clickImageOnScreen(okButtonImg);
     }
 
     private void insertId(String id) {
-        clickIdTextBox();
-        Keyboard.type(id);
+        CommonMacro.clickAndType(idBoxImg, id);
+//        clickIdTextBox();
+//        Keyboard.type(id);
     }
 
     private void insertPwd(String pwd) {
-        clickPwdTextBox();
-        Keyboard.type(pwd);
+        CommonMacro.clickAndType(pwdBoxImg, pwd);
+//        clickPwdTextBox();
+//        Keyboard.type(pwd);
     }
 
     public void login(String id, String pwd) {

@@ -1,4 +1,4 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views;
 
 public class Item {
 

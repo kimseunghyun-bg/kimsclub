@@ -1,7 +1,7 @@
 package com.ksh.kimsClub.commonMacro;
 
 import com.ksh.common.utils.ImageUtil;
-import com.ksh.common.utils.MouseUtil;
+import com.ksh.common.utils.Mouse;
 import com.ksh.noxEmulator.MouseMacroBuilder;
 
 import javax.imageio.ImageIO;
@@ -23,7 +23,7 @@ public class StartMacro {
         }while (diffStartImg > 5);
 
         System.out.println("end");
-        MouseUtil.clickPlayMacro();
+//        Mouse.clickPlayMacro();
         String a = MouseMacroBuilder.createDragScript(110,1190,360,1000,6000);
         System.out.println(a);
     }

@@ -17,13 +17,11 @@ public class Keyboard {
     }
 
     public static void type(CharSequence characters) {
-        robot.delay(1000);
         int length = characters.length();
         for (int i = 0; i < length; i++) {
             char character = characters.charAt(i);
             type(character);
         }
-        robot.delay(1000);
     }
 
     private static void type(char character) {

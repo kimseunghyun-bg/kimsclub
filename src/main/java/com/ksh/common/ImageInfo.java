@@ -27,6 +27,13 @@ public class ImageInfo {
     @Getter
     Boolean isOnScreen = false;
 
+    @Setter
+    @Getter
+    int section_x=0;
+    @Setter
+    @Getter
+    int section_y=0;
+
     public ImageInfo(int xPosition, int yPosition, int width, int height) {
         this(xPosition, yPosition, width, height, null);
     }

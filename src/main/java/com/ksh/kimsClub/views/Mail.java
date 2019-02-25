@@ -1,7 +1,8 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views;
 
 import com.ksh.common.ImageInfo;
 import com.ksh.common.utils.ImageUtil;
+import com.ksh.kimsClub.commonMacro.CommonMacro;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -30,11 +31,7 @@ public class Mail {
     }
 
     public void readAllMails() {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        CommonMacro.sleep(1000);
         for (String mailName : mailList) {
             readMail(mailName);
         }
@@ -58,15 +55,16 @@ public class Mail {
 //        Position endPosition = new Position(startPosition.getX() - 200, startPosition.getY());
 //        CommonMacro.dragCommon(startPosition, endPosition);
 //        CommonMacro.clickPosition(startPosition);
-        CommonMacro.dragCommon(selectedImgInfo,
+        CommonMacro.drag(selectedImgInfo,
                 new ImageInfo(selectedImgInfo.getXPosition() - 200, selectedImgInfo.getYPosition(),
                         selectedImgInfo.getWidth(), selectedImgInfo.getHeight())
         );
-        CommonMacro.clickImage(selectedImgInfo);
+        CommonMacro.waitTimeAndClick(selectedImgInfo,500);
     }
 
-    public boolean clickGiftIcon() {
-        return CommonMacro.clickImageOnScreen(giftIconImg);
+    public void clickGiftIcon() {
+        CommonMacro.waitImgAndClick(giftIconImg,1000);
+//        return CommonMacro.clickImageOnScreen(giftIconImg);
 
 //        String giftIconImgPath = "src/main/resources/lastshelter/images/mail/giftIcon.jpg";
 //        ImageInfo giftIconImg = ImageUtil.findImageOnScreen(giftIconImgPath);
@@ -81,7 +79,9 @@ public class Mail {
     private void clickAllGiftIcon() {
         boolean isExist;
         do {
-            isExist = clickGiftIcon();
+            clickGiftIcon();
+            isExist = ImageUtil.findImageOnScreen(giftIconImg.getImgFile().getAbsolutePath()).getIsOnScreen();
+//            isExist = clickGiftIcon();
         } while (isExist);
     }
 
@@ -124,7 +124,7 @@ public class Mail {
             throw new NullPointerException(mailName + " is wrong name");
         }
 
-        CommonMacro.clickImage(selectedImgInfo);
+        CommonMacro.waitTimeAndClick(selectedImgInfo,500);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {

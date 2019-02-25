@@ -1,13 +1,9 @@
-package com.ksh.kimsClub.commonMacro;
+package com.ksh.kimsClub.views;
 
 import com.ksh.common.ImageInfo;
-import com.ksh.common.utils.ImageUtil;
 import com.ksh.common.Position;
 import com.ksh.common.utils.OCRUtil;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
-
-import java.awt.image.BufferedImage;
+import com.ksh.kimsClub.commonMacro.CommonMacro;
 
 public class RecruitHeroes {
 
@@ -32,36 +28,38 @@ public class RecruitHeroes {
     }
 
     public void clickRecruitButton() {
-        CommonMacro.clickImage(recruitButtonImg);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        CommonMacro.click(recruitButtonImg);
+        CommonMacro.sleep(500);
         CommonMacro.clickBack();
     }
 
     public void clickLeftHeroCard() {
-        CommonMacro.clickImage(leftHeroCardImg);
+        CommonMacro.waitTimeAndClick(leftHeroCardImg,500);
+//        CommonMacro.clickImage(leftHeroCardImg);
     }
 
     public void clickRightHeroCard() {
-        CommonMacro.clickImage(rightHeroCardImg);
+        CommonMacro.waitTimeAndClick(rightHeroCardImg, 500);
+//        CommonMacro.clickImage(rightHeroCardImg);
     }
 
     public void clickCenterHeroCard() {
-        CommonMacro.clickImage(centerHeroCardImg);
+        CommonMacro.waitTimeAndClick(centerHeroCardImg, 500);
+//        CommonMacro.clickImage(centerHeroCardImg);
     }
 
     public void dragToRightPage() {
-        CommonMacro.dragCommon(rightHeroCardImg, leftHeroCardImg);
+        CommonMacro.drag(rightHeroCardImg, leftHeroCardImg);
+//        CommonMacro.dragCommon(rightHeroCardImg, leftHeroCardImg);
     }
 
     public void dragToLeftPage() {
-        CommonMacro.dragCommon(leftHeroCardImg, rightHeroCardImg);
+        CommonMacro.drag(leftHeroCardImg, rightHeroCardImg);
+//        CommonMacro.dragCommon(leftHeroCardImg, rightHeroCardImg);
     }
 
     public boolean isFreeRecruit() {
+        CommonMacro.sleep(200);
         return OCRUtil.isImgContainsText(recruitButtonImg, "Free");
     }
 

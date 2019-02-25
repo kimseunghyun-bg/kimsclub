@@ -1,8 +1,15 @@
 package com.ksh.kimsClub.commonMacro;
 
+import com.ksh.kimsClub.views.Base;
+import com.ksh.kimsClub.views.Buildings;
+import com.ksh.kimsClub.views.CommercialHub;
+import com.ksh.kimsClub.views.alliance.AllianceGift;
+import com.ksh.kimsClub.views.alliance.AllianceHelp;
 import org.opencv.core.Core;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 public class DailyGather {
     public static void main(String[] args) {
@@ -15,23 +22,13 @@ public class DailyGather {
         for (String id : ids) {
             long startTime = System.currentTimeMillis();
 
-            // 로그인
-            base.gotoBaseHome();
-            base.clickSettingsIcon().clickAccountButton().clickSwitchAccountButton().clickIm30AccountButton().login(id, pwd);
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
             // 연맹 도움
             base.gotoBaseHome();
-            AllianceHelp allianceHelp = base.clickHelpIcon();
-            if (allianceHelp != null)
-                allianceHelp.clickHelpAllButton();
+            Optional.ofNullable(base.clickHelpIcon()).ifPresent(AllianceHelp::clickHelpAllButton);
 
             // 연맹 선물
             base.gotoBaseHome();
+            Optional.ofNullable(base.clickGiftIcon()).ifPresent(AllianceGift::clickAllCollectButton);
             AllianceGift allianceGift = base.clickGiftIcon();
             if (allianceGift != null)
                 allianceGift.clickAllCollectButton();
@@ -48,13 +45,36 @@ public class DailyGather {
             base.gotoBaseHome();
             base.clickMailIcon().readAllMails();
 
+            // 연맹 기부
+            base.gotoBaseHome();
+            base.clickAllianceIcon().clickTechnology().contribute();
+
+            // 물 판매
+            base.gotoBaseHome();
+            Optional.ofNullable(Buildings.getInstance().rssTrade()).ifPresent(CommercialHub::sellWater);
+
+            // 생산센터 수확
+            base.gotoBaseHome();
+            Buildings.getInstance().harvest();
+
+            // 전기 구매
+            base.gotoBaseHome();
+            Optional.ofNullable(Buildings.getInstance().rssTrade()).ifPresent(CommercialHub::buyElectricity);
+
             // 일일 보상 수령
             base.gotoBaseHome();
-            base.clickAllienceIcon().clickSalary().gatherAllBox();
+            base.clickAllianceIcon().clickSalary().gatherAllBox();
+
+            // 로그인
+            base.gotoBaseHome();
+            base.clickSettingsIcon().clickAccountButton().clickSwitchAccountButton().clickIm30AccountButton().login(id, pwd);
+            CommonMacro.sleep(5000);
 
             long endTime = System.currentTimeMillis();
-            System.out.println("start Time: "+new Date(startTime * 1000));
-            System.out.println("end Time: "+new Date(endTime * 1000));
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss.SSS");
+            System.out.println("start Time: "+sdf.format(new Date(startTime)));
+            System.out.println("end Time: "+sdf.format(new Date(endTime)));
+            System.out.println((endTime-startTime)/1000L);
         }
     }
 }

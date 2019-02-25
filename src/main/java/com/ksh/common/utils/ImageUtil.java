@@ -1,10 +1,14 @@
 package com.ksh.common.utils;
 
 import com.ksh.common.ImageInfo;
-import org.opencv.core.*;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,10 +24,12 @@ import java.util.Map;
 
 public class ImageUtil {
     private static Robot robot;
+    private static Logger logger;
 
     static {
         try {
             robot = new Robot();
+            logger = LoggerFactory.getLogger(ImageUtil.class);
         } catch (AWTException e) {
             e.printStackTrace();
         }
@@ -107,6 +113,10 @@ public class ImageUtil {
         return resultImages;
     }
 
+    public static ImageInfo findImageOnScreen(ImageInfo tmplImg) {
+        return findImageOnScreen(tmplImg.getImgFile().getAbsolutePath());
+    }
+
     public static ImageInfo findImageOnScreen(String templateImgPath) {
         BufferedImage captureImg = robot.createScreenCapture(new Rectangle(0, 0, 440, 813));
         String tempScreenPath = "src/main/resources/lastshelter/images/temp/tempScreen.jpg";
@@ -157,6 +167,28 @@ public class ImageUtil {
         int g2 = (rgb2 >> 8) & 0xff;
         int b2 = rgb2 & 0xff;
         return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
+    }
+
+    public static ImageInfo waitForImgAppear(ImageInfo targetImg, int timeout) {
+        return waitForImgAppear(targetImg.getImgFile().getAbsolutePath(), timeout);
+    }
+
+    public static ImageInfo waitForImgAppear(String targetImgPath, int timeout) {
+        logger.info("start waitForImgAppear");
+        ImageInfo findImage;
+        long startTime = System.currentTimeMillis();
+
+        do {
+            findImage = ImageUtil.findImageOnScreen(targetImgPath);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } while (!findImage.getIsOnScreen() && (System.currentTimeMillis() - startTime) < timeout);
+
+        logger.info("finish waitForImgAppear "+findImage.toString());
+        return findImage;
     }
 
     @Deprecated
@@ -264,7 +296,10 @@ public class ImageUtil {
 
         // MenuIcon 140, 575, 155, 35
 //        BufferedImage captureImg = robot.createScreenCapture(new Rectangle(150, 485, 150, 30));
-        BufferedImage captureImg = robot.createScreenCapture(new Rectangle(390, 103, 23, 23));
+        // erroe at login
+//        BufferedImage captureImg = robot.createScreenCapture(new Rectangle(95, 682, 45, 23));
+//        CommonMacro.clickBack();
+        BufferedImage captureImg = robot.createScreenCapture(new Rectangle(220, 685, 40, 20));
 
         ImageIO.write(captureImg, "jpg", new File("sample.jpg"));
 
